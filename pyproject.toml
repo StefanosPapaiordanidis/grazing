@@ -1,0 +1,27 @@
+[project]
+name = "grazing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "geopandas>=1.1.4",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "planetary-computer>=1.0.0",
+    "pystac-client>=0.9.0",
+    "pyyaml>=6.0.3",
+    "rasterio>=1.5.1",
+    "requests>=2.34.2",
+    "rioxarray>=0.23.0",
+    "shapely>=2.1.2",
+    "typer>=0.27.2",
+    "xarray>=2026.7.0",
+]
+
+[project.scripts]
+grazing = "grazing.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.11.20,<0.12.0"]
+build-backend = "uv_build"

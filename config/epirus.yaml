@@ -1,0 +1,48 @@
+# Pilot configuration: Epirus, Greece
+aoi:
+  path: data/processed/aoi_epirus.geojson
+  name: epirus
+
+# Working projection and grid. UTM zone 34N covers Epirus (lon 18-24 E).
+crs: "EPSG:32634"
+resolution_m: 10
+
+paths:
+  raw: data/raw
+  processed: data/processed
+
+# ESA WorldCover 2021 v200 class codes -> grazing land class.
+# Anything not listed is excluded from grazing.
+landcover:
+  product: worldcover_2021_v200
+  classes:
+    30: grassland      # herbaceous
+    20: shrubland      # phrygana / maquis
+    60: sparse         # bare / sparse vegetation (thin forage)
+  # Cropland (40) always appears in the class map. Set true to also count it as
+  # grazeable (post-harvest stubble) in the per-animal suitability bands.
+  include_cropland: false
+
+# Copernicus DEM GLO-30 derived slope, in degrees.
+# Maximum slope each animal will realistically graze. Configurable defaults, refine with local input.
+slope_max_deg:
+  cattle: 15
+  sheep: 25
+  goats: 35
+
+# Fraction of dry matter production in each class that is edible for each animal.
+# Placeholder values pending validation; cattle are grazers, goats are browsers.
+edibility:
+  grassland: {cattle: 1.0, sheep: 1.0, goats: 1.0}
+  shrubland: {cattle: 0.2, sheep: 0.4, goats: 0.7}
+  sparse:    {cattle: 0.3, sheep: 0.5, goats: 0.6}
+
+# Herd demand parameters.
+livestock_units:
+  cattle: 1.0
+  sheep: 0.15
+  goats: 0.15
+# Daily dry matter intake per livestock unit, kg DM/day (approx 2.5% of 500 kg body weight).
+intake_kg_dm_per_lu_day: 12.5
+# Proper use factor: fraction of production that can be harvested sustainably.
+utilization_factor: 0.4
